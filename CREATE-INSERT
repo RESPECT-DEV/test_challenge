@@ -1,0 +1,337 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.1
+-- Dumped by pg_dump version 14.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: offer_type; Type: TYPE; Schema: public; Owner: postgres
+--
+
+CREATE TYPE public.offer_type AS ENUM (
+    'buy',
+    'sell'
+);
+
+
+ALTER TYPE public.offer_type OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: categories; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.categories (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    picture character varying(100),
+    slug character varying(100)
+);
+
+
+ALTER TABLE public.categories OWNER TO postgres;
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.categories ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: category_offer; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.category_offer (
+    category_id integer NOT NULL,
+    offer_id integer NOT NULL
+);
+
+
+ALTER TABLE public.category_offer OWNER TO postgres;
+
+--
+-- Name: comments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.comments (
+    id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    user_id integer DEFAULT 1 NOT NULL,
+    offer_id integer NOT NULL,
+    comment_text character varying(1000)
+);
+
+
+ALTER TABLE public.comments OWNER TO postgres;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.comments ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: offers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.offers (
+    id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    user_id integer DEFAULT 1 NOT NULL,
+    offer_type public.offer_type NOT NULL,
+    title character varying(255) NOT NULL,
+    full_text character varying(1000),
+    price numeric(18,2),
+    picture character varying(100)
+);
+
+
+ALTER TABLE public.offers OWNER TO postgres;
+
+--
+-- Name: offers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.offers ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.offers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    first_name character varying(255) NOT NULL,
+    last_name character varying(255) NOT NULL,
+    password_hash character varying(255) NOT NULL,
+    email character varying(100) NOT NULL,
+    avatar character varying(100)
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.categories (id, title, picture, slug) OVERRIDING SYSTEM VALUE VALUES (1, 'stuff', '14523452345', NULL);
+INSERT INTO public.categories (id, title, picture, slug) OVERRIDING SYSTEM VALUE VALUES (2, 'animals', '22319584013', NULL);
+INSERT INTO public.categories (id, title, picture, slug) OVERRIDING SYSTEM VALUE VALUES (3, 'houses', '32319584013', NULL);
+INSERT INTO public.categories (id, title, picture, slug) OVERRIDING SYSTEM VALUE VALUES (4, 'clothes', '4485623845', NULL);
+INSERT INTO public.categories (id, title, picture, slug) OVERRIDING SYSTEM VALUE VALUES (5, 'service', '5987920087', NULL);
+
+
+--
+-- Data for Name: category_offer; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.category_offer (category_id, offer_id) VALUES (1, 1);
+INSERT INTO public.category_offer (category_id, offer_id) VALUES (1, 2);
+INSERT INTO public.category_offer (category_id, offer_id) VALUES (2, 3);
+INSERT INTO public.category_offer (category_id, offer_id) VALUES (1, 4);
+INSERT INTO public.category_offer (category_id, offer_id) VALUES (3, 5);
+INSERT INTO public.category_offer (category_id, offer_id) VALUES (4, 6);
+INSERT INTO public.category_offer (category_id, offer_id) VALUES (1, 7);
+INSERT INTO public.category_offer (category_id, offer_id) VALUES (3, 7);
+INSERT INTO public.category_offer (category_id, offer_id) VALUES (5, 7);
+
+
+--
+-- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.comments (id, created_at, user_id, offer_id, comment_text) OVERRIDING SYSTEM VALUE VALUES (1, '2021-11-15 08:21:54+03', 2, 1, 'Wait');
+INSERT INTO public.comments (id, created_at, user_id, offer_id, comment_text) OVERRIDING SYSTEM VALUE VALUES (2, '2021-11-16 08:22:54+03', 1, 2, 'No!');
+INSERT INTO public.comments (id, created_at, user_id, offer_id, comment_text) OVERRIDING SYSTEM VALUE VALUES (3, '2021-11-17 08:23:54+03', 1, 3, 'Quanto costa?');
+INSERT INTO public.comments (id, created_at, user_id, offer_id, comment_text) OVERRIDING SYSTEM VALUE VALUES (4, '2021-11-18 08:24:54+03', 5, 1, 'I will buy it');
+
+
+--
+-- Data for Name: offers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.offers (id, created_at, user_id, offer_type, title, full_text, price, picture) OVERRIDING SYSTEM VALUE VALUES (1, '2021-11-14 08:23:54+03', 1, 'buy', 'book', 'Please help!', 100.00, NULL);
+INSERT INTO public.offers (id, created_at, user_id, offer_type, title, full_text, price, picture) OVERRIDING SYSTEM VALUE VALUES (2, '2021-11-13 08:23:54+03', 2, 'sell', 'DVD', 'Here is one stuff…', 150.00, NULL);
+INSERT INTO public.offers (id, created_at, user_id, offer_type, title, full_text, price, picture) OVERRIDING SYSTEM VALUE VALUES (3, '2021-11-12 08:23:54+03', 2, 'sell', 'cat', 'Anybody take away this hungry animal', NULL, NULL);
+INSERT INTO public.offers (id, created_at, user_id, offer_type, title, full_text, price, picture) OVERRIDING SYSTEM VALUE VALUES (4, '2021-11-11 08:23:54+03', 3, 'sell', 'SSD', 'top-secret mi-6 information on the disk', 2000.00, NULL);
+INSERT INTO public.offers (id, created_at, user_id, offer_type, title, full_text, price, picture) OVERRIDING SYSTEM VALUE VALUES (5, '2020-12-12 08:23:54+03', 4, 'buy', 'house', 'I have no place to live (after prison)', 10000.00, NULL);
+INSERT INTO public.offers (id, created_at, user_id, offer_type, title, full_text, price, picture) OVERRIDING SYSTEM VALUE VALUES (6, '2020-12-11 08:23:54+03', 5, 'sell', 'shirt', 'Red everyday unisex-shirt, very cheap!', 90.00, NULL);
+INSERT INTO public.offers (id, created_at, user_id, offer_type, title, full_text, price, picture) OVERRIDING SYSTEM VALUE VALUES (7, '2021-11-22 23:23:54+03', 5, 'sell', 'submarine licence', '', 200000.00, NULL);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (1, '2021-10-19 11:23:54+03', 'Amy', 'Silva', '0x01FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Amy.Silva@vigil.com', 'A8305C09DB');
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (2, '2020-12-20 10:23:54+03', 'Kirsten', 'Longacre', '0x02FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Kirsten.Longacre@vigil.com', 'B8305C09DB');
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (3, '2020-11-20 11:23:54+03', 'Tiffany', 'Docherty', '0x03FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Tiffany.Docherty@vigil.com', 'C8305C09DB');
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (4, '2020-09-19 12:23:54+03', 'Tara', 'Kierly', '0x04FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Tara.Kierly@vigil.com', 'D8305C09DB');
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (5, '2020-08-19 11:23:54+03', 'Craig', 'Burke', '0x05FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Craig.Burke@vigil.com', 'E8305C09DB');
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (6, '2020-07-20 11:23:54+03', 'Gary', 'Walsh', '0x06FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Gary.Walsh@vigil.com', 'F8305C09DB');
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (7, '2020-06-19 12:23:54+03', 'Ben', 'Oakley', '0x07FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Ben.Oakley@vigil.com', 'G8305C09DB');
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (8, '2020-05-20 10:23:54+03', 'Patrick', 'Cruden', '0x08FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Patrick.Cruden@vigil.com', 'H8305C09DB');
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (9, '2020-04-19 11:23:54+03', 'Laura', 'Michaels', '0x09FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Laura.Michaels@vigil.com', 'I8305C09DB');
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (10, '2020-03-20 11:23:54+03', 'Mark', 'Hill', '0x10FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Mark.Hill@vigil.com', 'J8305C09DB');
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (11, '2020-02-19 14:33:54+03', 'Jay', 'Kohli', '0x11FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Jay.Kohli@vigil.com', 'K8305C09DB');
+INSERT INTO public.users (id, created_at, first_name, last_name, password_hash, email, avatar) OVERRIDING SYSTEM VALUE VALUES (12, '2019-01-20 11:25:54+03', 'Peter', 'Ingles', '0x12FCC4026B5F162799A6DC8305C09DB9C1674AC616BD5C7422A45FBB6D0816AC163047C47A1F426F4F4C6B5B5042C671E', 'Peter.Ingles@vigil.com', 'L8305C09DB');
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.categories_id_seq', 5, true);
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.comments_id_seq', 4, true);
+
+
+--
+-- Name: offers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.offers_id_seq', 8, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 12, true);
+
+
+--
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: offers offers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.offers
+    ADD CONSTRAINT offers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: category_offer fk_category_categoryoffer; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.category_offer
+    ADD CONSTRAINT fk_category_categoryoffer FOREIGN KEY (category_id) REFERENCES public.categories(id);
+
+
+--
+-- Name: category_offer fk_offer_categoryoffer; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.category_offer
+    ADD CONSTRAINT fk_offer_categoryoffer FOREIGN KEY (offer_id) REFERENCES public.offers(id);
+
+
+--
+-- Name: comments fk_offer_comment; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT fk_offer_comment FOREIGN KEY (offer_id) REFERENCES public.offers(id);
+
+
+--
+-- Name: comments fk_user_comment; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT fk_user_comment FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: offers fk_user_offer; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.offers
+    ADD CONSTRAINT fk_user_offer FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
