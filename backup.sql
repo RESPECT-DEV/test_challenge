@@ -21,10 +21,6 @@ CREATE TYPE public.offer_type AS ENUM (
     'Sell'
 );
 
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
 CREATE TABLE public.categories (
     id integer NOT NULL,
     title character varying(255) NOT NULL,
