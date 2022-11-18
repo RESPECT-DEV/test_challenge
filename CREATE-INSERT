@@ -67,7 +67,7 @@ CREATE TABLE public.offers (
     id integer NOT NULL,
     created_at timestamp with time zone NOT NULL,
     user_id integer DEFAULT 1 NOT NULL,
-    cffer_type public.offer_type NOT NULL,
+    offer_type public.offer_type NOT NULL,
     title character varying(255) NOT NULL,
     full_text character varying(1000),
     price numeric(18,2),
