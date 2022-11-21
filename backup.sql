@@ -98,6 +98,7 @@ INSERT INTO public.category_offer (category_id, offer_id) VALUES (4, 6);
 INSERT INTO public.category_offer (category_id, offer_id) VALUES (1, 7);
 INSERT INTO public.category_offer (category_id, offer_id) VALUES (3, 7);
 INSERT INTO public.category_offer (category_id, offer_id) VALUES (5, 7);
+INSERT INTO public.category_offer (category_id, offer_id) VALUES (8, 1);
 
 -- Данные для таблицы "Комментарии"
 INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-11-15 08:21:54+03', 2, 1, 'Подожди-как секундочку...');
