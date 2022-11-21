@@ -101,13 +101,13 @@ INSERT INTO public.category_offer (category_id, offer_id) VALUES (5, 7);
 
 -- Данные для таблицы "Комментарии"
 INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-11-15 08:21:54+03', 2, 1, 'Подожди-как секундочку...');
-INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-11-16 08:22:54+03', 1, 2, 'Нет! Ни за что!');
+INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-11-16 08:22:54+03', 4, 2, 'Нет! Ни за что!');
 INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-11-17 08:23:54+03', 1, 3, 'И сколько же эта штука стоит?');
 INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-11-18 08:24:54+03', 5, 1, 'Я ДОЛЖЕН ЭТО КУПИТЬ!');
-INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-12-15 09:21:54+03', 2, 1, 'Не трать время на это, приятель!');
+INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-12-15 09:21:54+03', 7, 1, 'Не трать время на это, приятель!');
 INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-12-16 09:22:54+03', 1, 2, 'Выглядит очень интересно, и качество хорошее, и цена приятная.');
-INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-12-17 09:23:54+03', 1, 3, 'Я смогу позволить себе купить это только через год. Сможешь дождаться?');
-INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-12-18 09:24:54+03', 5, 1, 'Эй, эта вещи выглядит так, словно её только что пожевали и выплюнули!');
+INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-12-17 09:23:54+03', 6, 3, 'Я смогу позволить себе купить это только через год. Сможешь дождаться?');
+INSERT INTO public.comments (created_at, user_id, offer_id, comment_text) VALUES ('2021-12-18 09:24:54+03', 3, 1, 'Эй, эта вещи выглядит так, словно её только что пожевали и выплюнули!');
 
 --
 -- Sequences, Keys
